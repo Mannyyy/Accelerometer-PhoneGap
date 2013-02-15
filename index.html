@@ -1,121 +1,75 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
-  <head>
-    <title>Acceleration Example</title>
-	<style>
-		#dot {
-		  border-radius: 14px;
-		  width: 25px;
-		  height: 25px;
-		  background: #ff0000;
-		  position: absolute;
-		  bottom: 0px;
-		  left: 0px;
-		  
-		}
-	</style>
-    <script type="text/javascript" charset="utf-8" src="cordova-2.3.0.js"></script>
-    <script type="text/javascript" charset="utf-8">
+<head>
+<meta charset="UTF-8">
+<title>jQuery Mobile-Webanwendung</title>
+<link href="jquery-mobile/jquery.mobile.theme-1.0.min.css" rel="stylesheet" type="text/css"/>
+<link href="jquery-mobile/jquery.mobile.structure-1.0.min.css" rel="stylesheet" type="text/css"/>
+<script src="jquery-mobile/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="jquery-mobile/jquery.mobile-1.0.min.js" type="text/javascript"></script>
+</head> 
+<body> 
 
-    // The watch id references the current `watchAcceleration`
-    var watchID = null;
-	var radius	= 50;
-	// Initial X Y positions
-		var x = 0;
-		var y = 0;
-			
-		// Velocity / Speed
-		var vx = 0;
-		var vy = 0;
-			
-		// Acceleration
-		var accelX = 0;
-		var accelY = 0;
-			
-		// Multiplier to create proper pixel measurements
-		var vMultiplier	=	10;
+<div data-role="page1" id="page1">
+	<div data-role="header">
+		<h1>Start</h1>
+	</div>
+	<div data-role="content">	
+		<ul data-role="listview">
+			<li><a href="#page2">getCurrentAcceleration</a></li>
+            <li><a href="#page3">watchAcceleration</a></li>
+			<li><a href="#page4">Objektsteuerung</a></li>
+		</ul>		
+	</div>
+	<div data-role="footer">
+		<h4></h4>
+	</div>
+</div>
 
-    // Wait for Cordova to load
-    //
-    document.addEventListener("deviceready", onDeviceReady, false);
+<div data-role="page" id="page2">
+	<div data-role="header">
+		<h1></h1>
+	</div>
+	<div data-role="content">	
+		Inhalt		
+	</div>
+	<div data-theme="a" data-role="footer" data-position="fixed">
+        <a data-role="button" data-direction="reverse" data-rel="back" href="#page1"
+        class="ui-btn-left">
+            back
+        </a>
+    </div>
+</div>
 
-    // Cordova is ready
-    //
-    function onDeviceReady() {
-        startWatch();
-    }
+<div data-role="page" id="page3">
+	<div data-role="header">
+		<h1></h1>
+	</div>
+	<div data-role="content">	
+		Inhalt		
+	</div>
+	<div data-theme="a" data-role="footer" data-position="fixed">
+        <a data-role="button" data-direction="reverse" data-rel="back" href="#page1"
+        class="ui-btn-left">
+            back
+        </a>
+    </div>
+</div>
 
-    // Start watching the acceleration
-    //
-    function startWatch() {
-		
-        // Update acceleration every 3 seconds
-        var options = { frequency: 100 };
+<div data-role="page" id="page4">
+	<div data-role="header">
+		<h1></h1>
+	</div>
+	<div data-role="content">	
+		Inhalt		
+	</div>
+	<div data-theme="a" data-role="footer" data-position="fixed">
+        <a data-role="button" data-direction="reverse" data-rel="back" href="#page1"
+        class="ui-btn-left">
+            back
+        </a>
+    </div>
+</div>
 
-        watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
-		
-	}
-
-    // Stop watching the acceleration
-    //
-    function stopWatch() {
-        if (watchID) {
-            navigator.accelerometer.clearWatch(watchID);
-            watchID = null;
-        }
-    }
-
-    // onSuccess: Get a snapshot of the current acceleration
-    //
-    function onSuccess(acceleration) {
-		
-	
-		// Create a reference to our div elements
-		var dot = document.getElementById('dot');
-	
-        var element = document.getElementById('accelerometer');
-        element.innerHTML = 'Acceleration X: ' + acceleration.x + '<br />' +
-                            'Acceleration Y: ' + acceleration.y + '<br />' +
-                            'Acceleration Z: ' + acceleration.z + '<br />' +
-                            'Timestamp: '      + acceleration.timestamp + '<br />' +
-							'Move Top: ' 			+ y + 'px<br />' +
-							'Move Left: ' 			+ x + 'px';
-							
-		accelX = acceleration.x;
-		accelY = acceleration.y;
-				
-		vy = vy + (accelY);
-		vx = vx - accelX;
-				
-		y = parseInt(y + vy * vMultiplier);
-		x = parseInt(x + vx * vMultiplier);
-
-		if (x<0) { x = 0; vx = 0; }
-		if (y<0) { y = 0; vy = 0; }
-		
-		if (x>document.documentElement.clientWidth-radius) { 
-			x = document.documentElement.clientWidth-radius; vx = 0; 
-		}
-		
-		if (y>document.documentElement.clientHeight-radius) { 
-			y = document.documentElement.clientHeight-radius; vy = 0; 
-		}
-
-		// Apply the position to the dot element
-		dot.style.top 	= y + "px";
-		dot.style.left = x + "px";
-	}
-
-    // onError: Failed to get the acceleration
-    //
-    function onError() {
-        alert('onError!');
-    }
-
-    </script>
-  </head>
-  <body>
-	<div id="dot"></div>
-    <div id="accelerometer">Waiting for accelerometer...</div>
-  </body>
+</body>
 </html>
